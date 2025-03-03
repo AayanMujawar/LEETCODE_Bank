@@ -1,0 +1,42 @@
+#include <stdlib.h>
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* pivotArray(int* nums, int numsSize, int pivot, int* returnSize) {
+    int* result = (int*)malloc(numsSize * sizeof(int));
+    if (result == NULL) {
+        *returnSize = 0;
+        return NULL;
+    }
+
+    int left = 0;
+    int right = numsSize - 1;
+    int mid = 0;
+
+    // Place elements less than pivot at the beginning
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] < pivot) {
+            result[left++] = nums[i];
+        }
+    }
+
+    // Place elements equal to pivot in the middle
+    mid = left; // Correctly track the position for equal elements
+
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] == pivot) {
+            result[mid++] = nums[i];
+        }
+    }
+
+    // Place elements greater than pivot at the end
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] > pivot) {
+            result[mid++] = nums[i];
+        }
+    }
+
+    *returnSize = numsSize;
+    return result;
+}
