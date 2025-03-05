@@ -1,0 +1,10 @@
+long long coloredCells(int n) {
+    long long sum = 1;  // Initial center cell
+    if (n == 1) {
+        return 1;
+    }
+    for (int i = 1; i < n; i++) {  // Run loop (n-1) times
+        sum += (4 * i);  // Add new boundary cells
+    }
+    return sum;
+}
