@@ -1,0 +1,38 @@
+typedef struct {
+    int value;
+    int count;
+} Element;
+
+int* majorityElement(int* nums, int numsSize, int* returnSize) {
+    Element* elements = (Element*)malloc(sizeof(Element) * numsSize);
+    int numElements = 0;
+    
+    for (int i = 0; i < numsSize; i++) {
+        int found = 0;
+        for (int j = 0; j < numElements; j++) {
+            if (elements[j].value == nums[i]) {
+                elements[j].count++;
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            elements[numElements].value = nums[i];
+            elements[numElements].count = 1;
+            numElements++;
+        }
+    }
+
+    int* result = (int*)malloc(sizeof(int) * numElements);
+    *returnSize = 0;
+    
+    for (int i = 0; i < numElements; i++) {
+        if (elements[i].count > numsSize / 3) {
+            result[*returnSize] = elements[i].value;
+            (*returnSize)++;
+        }
+    }
+
+    free(elements);
+    return result;
+}
