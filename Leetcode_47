@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+void backtrack(int* nums, int numsSize, int** result, int* returnSize, int* path, bool* used, int** returnColumnSizes, int depth) {
+    if (depth == numsSize) {
+        result[*returnSize] = (int*)malloc(numsSize * sizeof(int));
+        memcpy(result[*returnSize], path, numsSize * sizeof(int));
+        (*returnColumnSizes)[*returnSize] = numsSize;
+        (*returnSize)++;
+        return;
+    }
+
+    for (int i = 0; i < numsSize; i++) {
+        if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) continue;
+
+        used[i] = true;
+        path[depth] = nums[i];
+        backtrack(nums, numsSize, result, returnSize, path, used, returnColumnSizes, depth + 1);
+        used[i] = false;
+    }
+}
+
+int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumnSizes) {
+    *returnSize = 0;
+    int** result = (int**)malloc(1000 * sizeof(int*));
+    *returnColumnSizes = (int*)malloc(1000 * sizeof(int));
+
+    int* path = (int*)malloc(numsSize * sizeof(int));
+    bool* used = (bool*)calloc(numsSize, sizeof(bool));
+
+    // Use proper int comparison function
+    qsort(nums, numsSize, sizeof(int), compare);
+
+    backtrack(nums, numsSize, result, returnSize, path, used, returnColumnSizes, 0);
+
+    free(path);
+    free(used);
+
+    return result;
+}
