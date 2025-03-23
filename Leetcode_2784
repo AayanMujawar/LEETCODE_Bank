@@ -1,0 +1,25 @@
+#include <stdbool.h>
+#include <stdlib.h>
+
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+bool isGood(int* nums, int numsSize) {
+    if (numsSize < 2) return false;  // Handle edge cases
+
+    int count = 1;
+    qsort(nums, numsSize, sizeof(int), compare);
+
+    int check = numsSize - 1;
+
+    for (int i = 0; i < check; i++) {
+        if (nums[i] != count) {
+            return false;
+        }
+        count++;
+    }
+
+    // Ensure we don't access out-of-bounds memory
+    return (nums[check] == nums[check - 1]);
+}
