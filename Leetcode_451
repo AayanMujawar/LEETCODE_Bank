@@ -1,0 +1,55 @@
+
+
+char* frequencySort(char* s) {
+    int hash[128] = {0};  
+    int len = strlen(s);
+
+    // Count frequencies
+    for (int i = 0; i < len; i++) {
+        hash[(int)s[i]]++;
+    }
+
+    // Create key-value pairs
+    char keys[128];
+    int values[128];
+    int size = 0;
+
+    for (int i = 0; i < 128; i++) {
+        if (hash[i] > 0) {
+            keys[size] = (char)i;
+            values[size] = hash[i];
+            size++;
+        }
+    }
+
+    // Sort by frequency (descending)
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (values[i] < values[j]) {
+                // Swap frequencies
+                int tempVal = values[i];
+                values[i] = values[j];
+                values[j] = tempVal;
+
+                // Swap characters
+                char tempKey = keys[i];
+                keys[i] = keys[j];
+                keys[j] = tempKey;
+            }
+        }
+    }
+
+    // Build result string
+    char* result = (char*)malloc(len + 1);
+    int idx = 0;
+
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < values[i]; j++) {
+            result[idx++] = keys[i];
+        }
+    }
+    
+    result[idx] = '\0';
+    return result;
+}
+
