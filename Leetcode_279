@@ -1,0 +1,26 @@
+
+int numSquares(int n) {
+    if (n <= 0) {
+        return 0;
+    }
+
+    int* dp = (int*)malloc((n + 1) * sizeof(int));
+    if (dp == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    dp[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        dp[i] = INT_MAX;
+        for (int j = 1; j * j <= i; j++) {
+            if (dp[i - j * j] != INT_MAX) {
+                dp[i] = (dp[i] < dp[i - j * j] + 1) ? dp[i] : (dp[i - j * j] + 1);
+            }
+        }
+    }
+
+    int result = dp[n];
+    free(dp);
+    return result;
+}
