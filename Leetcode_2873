@@ -1,0 +1,22 @@
+
+long long maximumTripletValue(int* nums, int numsSize) {
+    long long maxValue = LLONG_MIN;
+
+    for (int i = 0; i < numsSize - 2; i++) {
+        for (int j = i + 1; j < numsSize - 1; j++) {
+            for (int k = j + 1; k < numsSize; k++) {
+                long long num_i = (long long)nums[i];
+                long long num_j = (long long)nums[j];
+                long long num_k = (long long)nums[k];
+
+                long long tripletValue = (num_i - num_j) * num_k;
+
+                if (tripletValue > maxValue) {
+                    maxValue = tripletValue;
+                }
+            }
+        }
+    }
+
+    return maxValue < 0 ? 0 : maxValue;
+}
