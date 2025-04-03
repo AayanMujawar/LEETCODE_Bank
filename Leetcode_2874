@@ -1,0 +1,29 @@
+#include <limits.h>
+
+long long maximumTripletValue(int* nums, int numsSize) {
+    if (numsSize < 3) return 0;
+
+    long long maxValue = LLONG_MIN;
+    long long max1 = LLONG_MIN;
+    long long maxK = LLONG_MIN;
+    
+    long long* maxRight = (long long*)malloc(numsSize * sizeof(long long));
+    maxRight[numsSize - 1] = nums[numsSize - 1];
+    
+    // Precompute the maximum value for k from right to left
+    for (int i = numsSize - 2; i >= 0; i--) {
+        maxRight[i] = (long long)nums[i] > maxRight[i + 1] ? (long long)nums[i] : maxRight[i + 1];
+    }
+
+    // Iterate from the left to compute the maximum triplet value
+    for (int j = 1; j < numsSize - 1; j++) {
+        max1 = (long long)nums[j - 1] > max1 ? (long long)nums[j - 1] : max1;
+        maxK = maxRight[j + 1];
+        
+        long long tripletValue = (max1 - (long long)nums[j]) * maxK;
+        maxValue = tripletValue > maxValue ? tripletValue : maxValue;
+    }
+
+    free(maxRight);
+    return maxValue < 0 ? 0 : maxValue;
+}
