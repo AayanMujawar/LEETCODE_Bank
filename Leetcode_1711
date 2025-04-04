@@ -1,0 +1,79 @@
+
+#define MOD 1000000007
+#define MAX_DEL 1048576  // 2^20 * 2 (max possible sum)
+
+// Hash map size
+#define HASH_SIZE 131071
+
+typedef struct Node {
+    int key;
+    int count;
+    struct Node* next;
+} Node;
+
+Node* hashMap[HASH_SIZE];
+
+// Simple hash function
+int hash(int key) {
+    return abs(key) % HASH_SIZE;
+}
+
+// Get count from hash map
+int get(int key) {
+    int idx = hash(key);
+    Node* curr = hashMap[idx];
+    while (curr) {
+        if (curr->key == key) return curr->count;
+        curr = curr->next;
+    }
+    return 0;
+}
+
+// Increment count in hash map
+void put(int key) {
+    int idx = hash(key);
+    Node* curr = hashMap[idx];
+    while (curr) {
+        if (curr->key == key) {
+            curr->count++;
+            return;
+        }
+        curr = curr->next;
+    }
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->key = key;
+    newNode->count = 1;
+    newNode->next = hashMap[idx];
+    hashMap[idx] = newNode;
+}
+
+
+int countPairs(int* deliciousness, int deliciousnessSize) {
+    // Clear the hash map
+    for (int i = 0; i < HASH_SIZE; i++) {
+        Node* curr = hashMap[i];
+        while (curr) {
+            Node* temp = curr;
+            curr = curr->next;
+            free(temp);
+        }
+        hashMap[i] = NULL;
+    }
+
+    long long result = 0;
+
+    for (int i = 0; i < deliciousnessSize; i++) {
+        int val = deliciousness[i];
+        for (int j = 0; j <= 21; j++) {
+            int power = 1 << j;
+            int target = power - val;
+            result = (result + get(target)) % MOD;
+        }
+        put(val);
+    }
+
+    return (int)result;
+}
+
+
+
