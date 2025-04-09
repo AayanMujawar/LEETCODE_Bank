@@ -1,0 +1,22 @@
+
+int minOperations(int* nums, int numsSize, int k) {
+    bool seen[101] = {false};  // To track unique values > k
+
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] < k) {
+            return -1;  // Impossible if any value is less than k
+        }
+        if (nums[i] > k) {
+            seen[nums[i]] = true;  // Mark value as seen if it's greater than k
+        }
+    }
+
+    int count = 0;
+    for (int i = k + 1; i <= 100; i++) {
+        if (seen[i]) {
+            count++;  // Count how many unique values are greater than k
+        }
+    }
+
+    return count;
+}
