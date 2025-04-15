@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+int nthSuperUglyNumber(int n, int* primes, int primesSize) {
+    long long* ugly = (long long*)malloc(sizeof(long long) * n);
+    int* indexes = (int*)calloc(primesSize, sizeof(int));
+    long long* next = (long long*)malloc(sizeof(long long) * primesSize);
+
+    ugly[0] = 1;
+    for (int i = 0; i < primesSize; i++) {
+        next[i] = primes[i];
+    }
+
+    for (int i = 1; i < n; i++) {
+        long long next_ugly = LLONG_MAX;
+        for (int j = 0; j < primesSize; j++) {
+            if (next[j] < next_ugly) {
+                next_ugly = next[j];
+            }
+        }
+
+        ugly[i] = next_ugly;
+
+        for (int j = 0; j < primesSize; j++) {
+            if (next[j] == next_ugly) {
+                indexes[j]++;
+                next[j] = ugly[indexes[j]] * primes[j];
+            }
+        }
+    }
+
+    int result = (int)ugly[n - 1];
+    free(ugly);
+    free(indexes);
+    free(next);
+    return result;
+}
