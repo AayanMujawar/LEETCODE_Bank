@@ -1,0 +1,39 @@
+#include <stdlib.h>
+
+void swap(int* a, int* b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void backtrack(int* nums, int numsSize, int** result, int* returnSize, int** colSizes, int start) {
+    if (start == numsSize) {
+        // Allocate and copy the current permutation
+        int* temp = (int*)malloc(sizeof(int) * numsSize);
+        for (int i = 0; i < numsSize; i++)
+            temp[i] = nums[i];
+
+        result[*returnSize] = temp;
+        (*colSizes)[*returnSize] = numsSize;
+        (*returnSize)++;
+        return;
+    }
+
+    for (int i = start; i < numsSize; i++) {
+        swap(&nums[start], &nums[i]);
+        backtrack(nums, numsSize, result, returnSize, colSizes, start + 1);
+        swap(&nums[start], &nums[i]);  // backtrack
+    }
+}
+
+int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes) {
+    int total = 1;
+    for (int i = 1; i <= numsSize; i++) total *= i;  // factorial to get number of permutations
+
+    int** result = (int**)malloc(sizeof(int*) * total);
+    *returnColumnSizes = (int*)malloc(sizeof(int) * total);
+    *returnSize = 0;
+
+    backtrack(nums, numsSize, result, returnSize, returnColumnSizes, 0);
+    return result;
+}
