@@ -1,0 +1,54 @@
+#include <stdlib.h>
+
+int cmp(const void* a, const void* b) {
+    return (*(int**)a)[0] - (*(int**)b)[0];
+}
+
+int** merge(int** intervals, int intervalsSize, int* intervalsColSize, int* returnSize, int** returnColumnSizes) {
+    if (intervalsSize == 0) {
+        *returnSize = 0;
+        *returnColumnSizes = NULL;
+        return NULL;
+    }
+
+    qsort(intervals, intervalsSize, sizeof(int*), cmp); // Sort by starting time
+
+    int** result = (int**)malloc(sizeof(int*) * intervalsSize);
+    *returnColumnSizes = (int*)malloc(sizeof(int) * intervalsSize);
+    int count = 0;
+
+    int min = intervals[0][0];
+    int max = intervals[0][1];
+
+    for (int i = 1; i < intervalsSize; i++) {
+        int currStart = intervals[i][0];
+        int currEnd = intervals[i][1];
+
+        if (currStart <= max) {
+            // Overlapping: update min and max
+            if (currStart < min) min = currStart;
+            if (currEnd > max) max = currEnd;
+        } else {
+            // No overlap: save the current merged interval
+            result[count] = (int*)malloc(sizeof(int) * 2);
+            result[count][0] = min;
+            result[count][1] = max;
+            (*returnColumnSizes)[count] = 2;
+            count++;
+
+            // Start new interval
+            min = currStart;
+            max = currEnd;
+        }
+    }
+
+    // Add the last interval
+    result[count] = (int*)malloc(sizeof(int) * 2);
+    result[count][0] = min;
+    result[count][1] = max;
+    (*returnColumnSizes)[count] = 2;
+    count++;
+
+    *returnSize = count;
+    return result;
+}
