@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* multiply(char* num1, char* num2) {
+    if (num1[0] == '0' || num2[0] == '0')
+        return strdup("0");
+
+    int len1 = strlen(num1);
+    int len2 = strlen(num2);
+    int* result = calloc(len1 + len2, sizeof(int));
+
+    for (int i = len1 - 1; i >= 0; i--) {
+        for (int j = len2 - 1; j >= 0; j--) {
+            int mul = (num1[i] - '0') * (num2[j] - '0');
+            int sum = mul + result[i + j + 1];
+
+            result[i + j] += sum / 10;
+            result[i + j + 1] = sum % 10;
+        }
+    }
+
+    
+    int i = 0;
+    while (i < len1 + len2 && result[i] == 0) i++;
+
+    
+    if (i == len1 + len2)
+        return strdup("0");
+
+    char* resStr = malloc(len1 + len2 - i + 1);
+    int j = 0;
+    while (i < len1 + len2)
+        resStr[j++] = result[i++] + '0';
+
+    resStr[j] = '\0';
+
+    free(result);
+    return resStr;
+}
