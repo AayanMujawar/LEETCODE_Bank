@@ -1,0 +1,32 @@
+char* reverseWords(char* s) {
+    char* words[1000];
+    int index = 0;
+    int len = strlen(s);
+    int i = 0;
+    
+    while (i < len) {
+        while (i < len && s[i] == ' ') i++; // skip spaces
+        if (i >= len) break;
+        int start = i;
+        while (i < len && s[i] != ' ') i++; // end of word
+        int end = i;
+        
+        // Copy word
+        char* word = (char*)malloc(end - start + 1);
+        strncpy(word, s + start, end - start);
+        word[end - start] = '\0';
+        words[index++] = word;
+    }
+
+    // Build result string
+    char* result = (char*)malloc(len + 1);
+    result[0] = '\0';
+
+    for (int j = index - 1; j >= 0; j--) {
+        strcat(result, words[j]);
+        if (j > 0) strcat(result, " ");
+        free(words[j]);
+    }
+    
+    return result;
+}
