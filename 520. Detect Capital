@@ -1,0 +1,29 @@
+bool detectCapitalUse(char* word) {
+    int i = 0;
+    
+   
+    int uppercaseCount = 0;
+    int length = 0;
+
+    while (word[i] != '\0') {
+        if (word[i] >= 'A' && word[i] <= 'Z') {
+            uppercaseCount++;
+        }
+        i++;
+    }
+    length = i;
+
+   
+    if (uppercaseCount == length)
+        return true;
+
+    
+    if (uppercaseCount == 0)
+        return true;
+
+    
+    if (word[0] >= 'A' && word[0] <= 'Z' && uppercaseCount == 1)
+        return true;
+
+    return false;
+}
