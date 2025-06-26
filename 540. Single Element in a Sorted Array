@@ -1,0 +1,16 @@
+int singleNonDuplicate(int* nums, int numsSize) {
+    int unique = nums[0];
+    for(int i =1 ;i< numsSize-1 ; i++)
+    {
+        if((nums[i] != nums[i-1]) && (nums[i] != nums[i+1]))
+        {
+            unique = nums[i];
+            break;
+        }
+        if(nums[numsSize-1] != nums[numsSize-2])
+        {
+            unique = nums[numsSize-1];
+        }
+    }
+    return unique;
+}
