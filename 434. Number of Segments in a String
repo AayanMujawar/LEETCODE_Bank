@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int countSegments(string s) {
+      
+    int count = 0;
+    int n = s.length();
+
+    for (int i = 0; i < n; i++) {
+        // Check if current char is not space and either it's the first char
+        // or the previous char is space (i.e., a new word starts)
+        if (s[i] != ' ' && (i == 0 || s[i - 1] == ' ')) {
+            count++;
+        }
+    }
+
+    return count;
+
+    }
+};
