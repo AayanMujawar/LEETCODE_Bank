@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+        if (nums.size() <= 2) return true;
+
+        int i = 1;
+        // Find first unequal pair to determine direction
+        while (i < nums.size() && nums[i] == nums[i - 1]) {
+            i++;
+        }
+
+        // All elements are equal
+        if (i == nums.size()) return true;
+
+        bool isInc = nums[i] > nums[i - 1];
+
+        // Check rest based on direction
+        for (; i < nums.size(); i++) {
+            if (isInc && nums[i] < nums[i - 1]) return false;
+            if (!isInc && nums[i] > nums[i - 1]) return false;
+        }
+
+        return true;
+    }
+};
