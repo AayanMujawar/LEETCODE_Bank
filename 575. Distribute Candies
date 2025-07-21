@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int distributeCandies(int* candyType, int candyTypeSize) {
+    int hash[200001] = {0}; // handle -100000 to 100000
+    int unique = 0;
+
+    for (int i = 0; i < candyTypeSize; i++) {
+        int index = candyType[i] + 100000; // to handle negative types
+        if (hash[index] == 0) {
+            hash[index] = 1;
+            unique++;
+        }
+    }
+
+    int maxCanEat = candyTypeSize / 2;
+    return unique < maxCanEat ? unique : maxCanEat;
+}
