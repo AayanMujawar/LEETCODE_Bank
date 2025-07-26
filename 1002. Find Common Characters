@@ -1,0 +1,39 @@
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+
+char** commonChars(char** words, int wordsSize, int* returnSize) {
+    int minFreq[26];
+    for (int i = 0; i < 26; i++) {
+        minFreq[i] = INT_MAX;  // Start with max to find minimum across all words
+    }
+
+    // For each word, compute frequency and update minFreq
+    for (int w = 0; w < wordsSize; w++) {
+        int freq[26] = {0};
+        char* word = words[w];
+        for (int i = 0; word[i] != '\0'; i++) {
+            freq[word[i] - 'a']++;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] < minFreq[i]) {
+                minFreq[i] = freq[i];
+            }
+        }
+    }
+
+    // Collect common characters based on minFreq
+    char** result = (char**)malloc(100 * sizeof(char*));
+    *returnSize = 0;
+
+    for (int i = 0; i < 26; i++) {
+        for (int j = 0; j < minFreq[i]; j++) {
+            result[*returnSize] = (char*)malloc(2 * sizeof(char));
+            result[*returnSize][0] = i + 'a';
+            result[*returnSize][1] = '\0';
+            (*returnSize)++;
+        }
+    }
+
+    return result;
+}
