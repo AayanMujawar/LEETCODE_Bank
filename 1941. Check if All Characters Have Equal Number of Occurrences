@@ -1,0 +1,17 @@
+bool areOccurrencesEqual(char* s) {
+    char hash[125]={0};
+    for(int i =0 ; s[i]!='\0' ; i++)
+    {
+         hash[s[i]]++;
+    }
+     int count = hash[s[0]];
+    for(int i =0 ; s[i]!='\0' ; i++)
+    {
+        
+        if(hash[s[i]] != count)
+        {
+            return false;
+        }
+    }
+    return true;
+}
