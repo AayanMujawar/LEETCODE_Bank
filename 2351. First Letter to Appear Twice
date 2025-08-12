@@ -1,0 +1,12 @@
+char repeatedCharacter(char* s) {
+    char hash[150]={0};
+    for(int i = 0 ; s[i] != '\0' ; i++)
+    {
+        hash[s[i]]++;
+        if(hash[s[i]]==2)
+        {
+            return s[i];
+        }
+    }
+    return 0;
+}
