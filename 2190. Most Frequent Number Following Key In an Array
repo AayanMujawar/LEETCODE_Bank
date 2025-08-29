@@ -1,0 +1,23 @@
+int mostFrequent(int* nums, int numsSize, int key) {
+    int hash[1001]={0};
+    
+    for(int i = 0 ; i  < numsSize-1 ; i++)
+    {
+        if(nums[i] == key )
+        {
+            hash[nums[i+1]]++;
+        }
+    }
+    int large = 0;
+    int target = 0 ;
+    for(int j = 0 ; j < numsSize ; j++)
+    {
+      if(large < hash[nums[j]])  
+      {
+        large = hash[nums[j]];
+        target = nums[j];
+
+      }
+    }
+    return target;
+}
