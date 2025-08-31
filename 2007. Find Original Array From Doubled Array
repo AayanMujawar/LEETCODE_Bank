@@ -1,0 +1,47 @@
+#include <stdlib.h>
+
+int cmpfunc(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int* findOriginalArray(int* changed, int changedSize, int* returnSize) {
+    if (changedSize % 2 != 0) {
+        *returnSize = 0;
+        return malloc(0);
+    }
+
+    qsort(changed, changedSize, sizeof(int), cmpfunc);
+
+    int* result = (int*)malloc(sizeof(int) * (changedSize / 2));
+    int hash[200001] = {0};
+
+    for (int i = 0; i < changedSize; i++) {
+        hash[changed[i]]++;
+    }
+
+    int k = 0;
+    for (int i = 0; i < changedSize; i++) {
+        int x = changed[i];
+        if (hash[x] == 0) continue;  // already used
+
+        if (hash[2*x] == 0) {
+            // invalid case: can't find 2*x
+            *returnSize = 0;
+            free(result);
+            return malloc(0);
+        }
+
+        if (k >= changedSize / 2) {  // prevent overflow
+            *returnSize = 0;
+            free(result);
+            return malloc(0);
+        }
+
+        result[k++] = x;
+        hash[x]--;
+        hash[2*x]--;
+    }
+
+    *returnSize = k;
+    return result;
+}
