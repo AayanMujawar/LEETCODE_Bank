@@ -1,0 +1,22 @@
+int cmp(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b); // compare two ints
+}
+
+int distinctAverages(int* nums, int numsSize) {
+    int hash[201] = {0};
+    qsort(nums, numsSize, sizeof(int), cmp);
+
+    int left = 0, right = numsSize - 1;
+    while (left < right) {
+        int sum = nums[left] + nums[right];
+        hash[sum] = 1; 
+        left++;
+        right--;
+    }
+
+    int count = 0;
+    for (int i = 0; i < 201; i++) {
+        if (hash[i]) count++;
+    }
+    return count;
+}
