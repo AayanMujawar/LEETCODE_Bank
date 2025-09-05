@@ -1,0 +1,11 @@
+int countCompleteDayPairs(int* hours, int hoursSize) {
+    int hash[24] = {0};   // store frequencies of remainders mod 24
+    long long count = 0;  // to avoid overflow for large n
+   for (int i = 0; i < hoursSize; i++) {
+        int rem = hours[i] % 24;
+        int partner = (24 - rem) % 24;  // needed remainder to form complete day
+         count += hash[partner];   // add all existing partners
+        hash[rem]++;              // store current remainder
+    }
+  return (int)count;
+}
