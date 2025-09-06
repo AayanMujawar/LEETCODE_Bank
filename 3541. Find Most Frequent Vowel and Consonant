@@ -1,0 +1,27 @@
+int maxFreqSum(char* s) {
+    char vowel[5]={'a','e','i','o','u'};
+    int hash[125]={0};
+for(int i = 0 ; s[i]!='\0';i++)
+    {
+        hash[s[i]]++;
+    }
+    int large = 0 ;
+    for(int i = 0 ; i < 5 ; i++)
+    {
+        if(large< hash[vowel[i]])
+        {
+            large = hash[vowel[i]];
+        }
+    }
+    int result = 0;
+    result = result + large ;
+    large = 0;
+     for (int i = 'a'; i <= 'z'; i++) {
+        if (i!='a' && i!='e' && i!='i' && i!='o' && i!='u') {
+            if (hash[i] > large)
+                large = hash[i];
+        }
+    }
+    result = result + large ;
+    return result;
+}
