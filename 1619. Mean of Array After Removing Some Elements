@@ -1,0 +1,18 @@
+import java.util.Arrays;
+
+class Solution {
+    public double trimMean(int[] arr) {
+        int size = arr.length;
+        Arrays.sort(arr);  // sort the array first
+
+        int per = (size * 5) / 100;  // number of elements to trim from each side
+        int len = size - 2 * per;    // number of elements remaining
+
+        int total = 0;
+        for (int i = per; i < size - per; i++) {
+            total += arr[i];
+        }
+
+        return (double) total / len;  // return mean as double
+    }
+}
