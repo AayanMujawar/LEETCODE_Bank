@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minAbsoluteSumDiff(vector<int>& nums1, vector<int>& nums2) {
+        const int MOD = 1e9 + 7;
+        int n = nums1.size();
+        vector<int> sortedNums = nums1;
+        sort(sortedNums.begin(), sortedNums.end());
+        
+        long long total = 0;
+        int maxGain = 0;
+        
+        for(int i = 0; i < n; i++) {
+            int diff = abs(nums1[i] - nums2[i]);
+            total += diff;
+            
+            // Binary search for closest element in sortedNums
+            auto it = lower_bound(sortedNums.begin(), sortedNums.end(), nums2[i]);
+            
+            if(it != sortedNums.end()) {
+                maxGain = max(maxGain, diff - abs(*it - nums2[i]));
+            }
+            if(it != sortedNums.begin()) {
+                --it;
+                maxGain = max(maxGain, diff - abs(*it - nums2[i]));
+            }
+        }
+        
+        return (total - maxGain) % MOD;
+    }
+};
