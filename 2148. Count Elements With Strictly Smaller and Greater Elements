@@ -1,0 +1,16 @@
+int compare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);   
+}
+int countElements(int* nums, int numsSize) {
+    int minVal = INT_MAX, maxVal = INT_MIN;
+    qsort(nums,numsSize,sizeof(int),compare);
+    // Step 2: Count elements strictly between min and max
+    int count = 0;
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] > nums[0] && nums[i] < nums[numsSize-1]) {
+            count++;
+        }
+    }
+
+    return count;
+}
