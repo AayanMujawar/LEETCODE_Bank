@@ -1,0 +1,44 @@
+
+
+// Comparator for ascending order
+int cmpAsc(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+// Comparator for descending order
+int cmpDesc(const void* a, const void* b) {
+    return (*(int*)b - *(int*)a);
+}
+
+int* sortEvenOdd(int* nums, int numsSize, int* returnSize) {
+    *returnSize = numsSize;
+    int evenCount = (numsSize + 1) / 2; // number of even indices
+    int oddCount = numsSize / 2;        // number of odd indices
+    
+    int* evenArr = (int*)malloc(evenCount * sizeof(int));
+    int* oddArr  = (int*)malloc(oddCount * sizeof(int));
+    
+    // Separate even and odd index elements
+    for (int i = 0; i < numsSize; i++) {
+        if (i % 2 == 0)
+            evenArr[i/2] = nums[i];
+        else
+            oddArr[i/2] = nums[i];
+    }
+    
+    // Sort evens ascending, odds descending
+    qsort(evenArr, evenCount, sizeof(int), cmpAsc);
+    qsort(oddArr, oddCount, sizeof(int), cmpDesc);
+    
+    // Merge back into nums
+    for (int i = 0; i < numsSize; i++) {
+        if (i % 2 == 0)
+            nums[i] = evenArr[i/2];
+        else
+            nums[i] = oddArr[i/2];
+    }
+    
+    free(evenArr);
+    free(oddArr);
+    return nums;
+}
