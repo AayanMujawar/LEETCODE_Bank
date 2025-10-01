@@ -1,0 +1,26 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+#include <stdio.h>
+#include <stdlib.h>
+
+int cmp(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int* numberGame(int* nums, int numsSize, int* returnSize) {
+    // sort the array
+    qsort(nums, numsSize, sizeof(int), cmp);
+
+    // allocate memory for result
+    int* result = (int*)malloc(numsSize * sizeof(int));
+
+    // copy and swap pairs
+    for (int i = 0; i < numsSize; i += 2) {
+        result[i] = nums[i + 1];     // Bob's pick (larger one in pair) goes first
+        result[i + 1] = nums[i];     // Alice's pick goes second
+    }
+
+    *returnSize = numsSize;
+    return result;
+}
