@@ -1,0 +1,28 @@
+class Solution {
+    public int maximumPopulation(int[][] logs) {
+        int[] years = new int[101]; // For 1950–2050
+
+        // Step 1: Mark births and deaths
+        for (int[] log : logs) {
+            int birth = log[0];
+            int death = log[1];
+            years[birth - 1950] += 1;  // Person born
+            years[death - 1950] -= 1;  // Person died (not alive that year)
+        }
+
+        // Step 2: Find year with maximum population using prefix sum
+        int maxPop = 0;
+        int currPop = 0;
+        int maxYear = 1950;
+
+        for (int i = 0; i < 101; i++) {
+            currPop += years[i];
+            if (currPop > maxPop) {
+                maxPop = currPop;
+                maxYear = 1950 + i;  // Convert index back to year
+            }
+        }
+
+        return maxYear;
+    }
+}
