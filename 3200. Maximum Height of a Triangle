@@ -1,0 +1,33 @@
+class Solution {
+    public int maxHeightOfTriangle(int red, int blue) {
+        // Try both possibilities and return the maximum height
+        return Math.max(formTriangle(red, blue), formTriangle(blue, red));
+    }
+
+    private int formTriangle(int firstColor, int secondColor) {
+        int height = 0;
+        int i = 1;
+
+        while (true) {
+            // Odd rows → first color
+            if (i % 2 == 1) {
+                if (firstColor >= i) {
+                    firstColor -= i;
+                } else {
+                    break;
+                }
+            }
+            // Even rows → second color
+            else {
+                if (secondColor >= i) {
+                    secondColor -= i;
+                } else {
+                    break;
+                }
+            }
+            height++;
+            i++;
+        }
+        return height;
+    }
+}
