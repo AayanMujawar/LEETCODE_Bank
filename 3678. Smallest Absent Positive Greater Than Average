@@ -1,0 +1,22 @@
+int smallestAbsent(int* nums, int numsSize) {
+    int hash[205] = {0};
+    int sum = 0;
+
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] > 0 && nums[i] <= 200)
+            hash[nums[i]] = 1;
+        sum += nums[i];
+    }
+
+    double avg = (double)sum / numsSize;
+    int start = (int)ceil(avg);  // ✅ removed +1
+
+    if (start < 1) start = 1;
+
+    for (int i = start; i <= 200; i++) {
+        if (i > avg && hash[i] == 0)  // ✅ ensure strictly > avg
+            return i;
+    }
+
+    return 201;
+}
