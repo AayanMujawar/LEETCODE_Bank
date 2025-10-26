@@ -1,0 +1,31 @@
+int getLeastFrequentDigit(int n) {
+    
+    int freq[10] = {0};
+    int temp = n;
+
+    // Step 1: Count frequency of each digit
+    while (temp > 0) {
+        int digit = temp % 10;
+        freq[digit]++;
+        temp /= 10;
+    }
+
+    // Step 2: Find minimum nonzero frequency
+    int minFreq = 100000, result = 0;
+    for (int i = 0; i < 10; i++) {
+        if (freq[i] > 0 && freq[i] < minFreq) {
+            minFreq = freq[i];
+            result = i;
+        }
+    }
+
+    // Step 3: Return smallest digit if multiple have same frequency
+    for (int i = 0; i < 10; i++) {
+        if (freq[i] == minFreq) {
+            return i;
+        }
+    }
+
+    return result;
+}
+
