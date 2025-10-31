@@ -1,0 +1,24 @@
+char nextGreatestLetter(char* letters, int lettersSize, char target) {
+    int hash[128] = {0};  // enough for ASCII lowercase letters
+    
+    // mark all present letters
+    for (int i = 0; i < lettersSize; i++) {
+        hash[(int)letters[i]] = 1;
+    }
+
+    // search next greater than target
+    for (int i = target + 1; i <= 'z'; i++) {
+        if (hash[i]) {
+            return (char)i;
+        }
+    }
+
+    // wrap-around to smallest available
+    for (int i = 'a'; i <= 'z'; i++) {
+        if (hash[i]) {
+            return (char)i;
+        }
+    }
+
+    return letters[0];  // fallback
+}
