@@ -1,0 +1,39 @@
+
+import java.util.*;
+
+class Solution {
+    public String[] findWords(String[] words) {
+        // Step 1: Create a map for each letter -> keyboard row number
+        int[] hash = new int[26];
+
+        String row1 = "qwertyuiop";
+        String row2 = "asdfghjkl";
+        String row3 = "zxcvbnm";
+
+        for (char ch : row1.toCharArray()) hash[ch - 'a'] = 1;
+        for (char ch : row2.toCharArray()) hash[ch - 'a'] = 2;
+        for (char ch : row3.toCharArray()) hash[ch - 'a'] = 3;
+
+        // Step 2: Prepare list for valid words
+        List<String> result = new ArrayList<>();
+
+        // Step 3: Check each word
+        for (String word : words) {
+            String lower = word.toLowerCase();
+            int mainRow = hash[lower.charAt(0) - 'a'];
+            boolean valid = true;
+
+            for (int i = 1; i < lower.length(); i++) {
+                if (hash[lower.charAt(i) - 'a'] != mainRow) {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (valid) result.add(word);
+        }
+
+        // Step 4: Convert list to array
+        return result.toArray(new String[0]);
+    }
+}
