@@ -1,0 +1,40 @@
+#include <stdbool.h>
+
+bool isTrionic(int* nums, int numsSize) {
+    if (numsSize < 3) return false;
+
+    bool seen_inc1 = false;   // saw the first increasing phase
+    bool seen_dec  = false;   // saw the decreasing phase
+    bool seen_inc2 = false;   // saw the final increasing phase
+
+    for (int i = 1; i < numsSize; ++i) {
+        if (nums[i] > nums[i-1]) {          // increasing step
+            if (!seen_dec) {
+                // still in the first increasing phase
+                seen_inc1 = true;
+            } else {
+                // we already passed the decreasing phase -> second increase
+                seen_inc2 = true;
+            }
+        }
+        else if (nums[i] < nums[i-1]) {     // decreasing step
+            if (!seen_inc1) {
+                // decrease before any initial increase -> invalid
+                return false;
+            }
+            if (!seen_dec) {
+                // first time we see decrease -> enter decreasing phase
+                seen_dec = true;
+            } else {
+                // if we are already in the final increasing phase (seen_inc2)
+                // then any decrease after this invalidates trionic pattern
+                if (seen_inc2) return false;
+                // otherwise we are still in continued decreasing phase -> ok
+            }
+        }
+        // else equal: ignore (neither increase nor decrease)
+    }
+
+    // valid only if we saw all three phases
+    return (seen_inc1 && seen_dec && seen_inc2);
+}
