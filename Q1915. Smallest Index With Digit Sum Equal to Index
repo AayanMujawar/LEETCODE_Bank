@@ -1,0 +1,22 @@
+int smallestIndex(int* nums, int numsSize) {
+    for (int i = 0; i < numsSize; i++) {
+        int n = nums[i];
+        int sum = 0;
+
+        // handle negative numbers too, just in case
+        if (n < 0) n = -n;
+
+        // sum the digits of nums[i]
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+
+        // check if digit sum equals index
+        if (sum == i)
+            return i;
+    }
+
+    // if no index found
+    return -1;
+}
