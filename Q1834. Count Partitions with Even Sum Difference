@@ -1,0 +1,22 @@
+int countPartitions(int* nums, int numsSize) {
+    int sum = 0;
+    int left = 0;
+    int count = 0;
+
+    for (int i = 0; i < numsSize; i++) {
+        sum = sum + nums[i];   // total sum of array
+    }
+
+    // for (int i = 0; i < numsSize; i++) {
+    //     if ((nums[i] + left - (sum - nums[i])) % 2 == 0) {
+    //         count++;
+    //     }
+    //     left = nums[i] + left;  // update prefix sum
+    // }
+if(sum % 2 ==0)
+{
+    return numsSize - 1;
+}
+return 0;
+    
+}
