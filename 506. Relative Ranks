@@ -1,0 +1,36 @@
+
+class Solution {
+    public String[] findRelativeRanks(int[] score) {
+        int n = score.length;
+        String[] answer = new String[n];
+
+        
+        int[] sorted = score.clone();
+
+        // Step 2: Sort descending
+        Arrays.sort(sorted);
+        for (int i = 0; i < n / 2; i++) {
+            int temp = sorted[i];
+            sorted[i] = sorted[n - i - 1];
+            sorted[n - i - 1] = temp;
+        }
+
+        // Step 3: Map score -> rank
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(sorted[i], i + 1);
+        }
+
+        // Step 4: Build answer using original order
+        for (int i = 0; i < n; i++) {
+            int rank = map.get(score[i]);
+
+            if (rank == 1) answer[i] = "Gold Medal";
+            else if (rank == 2) answer[i] = "Silver Medal";
+            else if (rank == 3) answer[i] = "Bronze Medal";
+            else answer[i] = String.valueOf(rank);
+        }
+
+        return answer;
+    }
+}
