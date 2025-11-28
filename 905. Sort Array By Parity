@@ -1,0 +1,23 @@
+int* sortArrayByParity(int* nums, int numsSize, int* returnSize) {
+    // Allocate new array
+    int* result = (int*)malloc(numsSize * sizeof(int));
+
+    int left = 0;
+    int right = numsSize - 1;
+
+    // Traverse input array
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] % 2 == 0) {
+            // Even → place at left pointer
+            result[left] = nums[i];
+            left++;
+        } else {
+            // Odd → place at right pointer
+            result[right] = nums[i];
+            right--;
+        }
+    }
+
+    *returnSize = numsSize;
+    return result;
+}
