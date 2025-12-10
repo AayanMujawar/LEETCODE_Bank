@@ -1,0 +1,20 @@
+int* twoOutOfThree(int* nums1, int nums1Size, int* nums2, int nums2Size, int* nums3, int nums3Size, int* returnSize) {
+    int seen1[101] = {0}, seen2[101] = {0}, seen3[101] = {0};
+    
+    for(int i = 0; i < nums1Size; i++) seen1[nums1[i]] = 1;
+    for(int i = 0; i < nums2Size; i++) seen2[nums2[i]] = 1;
+    for(int i = 0; i < nums3Size; i++) seen3[nums3[i]] = 1;
+
+    int* res = malloc(101 * sizeof(int));
+    *returnSize = 0;
+
+    for(int n = 1; n <= 100; n++) {
+        int count = seen1[n] + seen2[n] + seen3[n];
+        if(count >= 2) {
+            res[*returnSize] = n;
+            (*returnSize)++;
+        }
+    }
+
+    return res;
+}
