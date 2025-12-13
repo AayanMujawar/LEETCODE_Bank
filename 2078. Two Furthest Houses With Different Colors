@@ -1,0 +1,19 @@
+int maxDistance(int* colors, int colorsSize) {
+    int max1 = 0, max2 = 0;
+
+    for (int i = colorsSize - 1; i >= 0; i--) {
+        if (colors[i] != colors[0]) {
+            max1 = i;
+            break;
+        }
+    }
+
+    for (int i = 0; i < colorsSize; i++) {
+        if (colors[i] != colors[colorsSize - 1]) {
+            max2 = colorsSize - 1 - i;
+            break;
+        }
+    }
+
+    return max1 > max2 ? max1 : max2;
+}
