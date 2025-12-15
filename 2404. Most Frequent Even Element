@@ -1,0 +1,21 @@
+int mostFrequentEven(int* nums, int numsSize) {
+    int hash[100001] = {0};   // enough for values 0..100000
+
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i] % 2 == 0) {
+            hash[nums[i]]++;
+        }
+    }
+
+    int maxFreq = 0;
+    int answer = -1;
+
+    for (int i = 0; i <= 100000; i++) {
+        if (hash[i] > maxFreq) {
+            maxFreq = hash[i];
+            answer = i;
+        }
+    }
+
+    return answer;
+}
