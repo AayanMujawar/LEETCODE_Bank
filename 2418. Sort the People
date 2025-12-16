@@ -1,0 +1,28 @@
+
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
+        unordered_map<int, int> mp;  // height -> index
+        
+        // Store height with original index
+        for (int i = 0; i < heights.size(); i++) {
+            mp[heights[i]] = i;
+        }
+
+        // Sort heights in descending order
+        sort(heights.begin(), heights.end(), greater<int>());
+
+        vector<string> result;
+        for (int h : heights) {
+            result.push_back(names[mp[h]]);
+        }
+
+        return result;
+    }
+};
