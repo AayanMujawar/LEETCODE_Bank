@@ -1,0 +1,23 @@
+int findMaxK(int* nums, int numsSize) {
+    int hash[2001] = {0};   // index 0 -> -1000, index 2000 -> 1000
+    int max = -1;
+
+    for (int i = 0; i < numsSize; i++) {
+        int val = nums[i];
+        int idx = val + 1000;
+
+        // mark current number as present
+        hash[idx] = 1;
+
+        // check if opposite sign exists
+        if (val > 0 && hash[1000 - val]) {
+            if (val > max)
+                max = val;
+        }
+        else if (val < 0 && hash[1000 - val]) {
+            if (-val > max)
+                max = -val;
+        }
+    }
+    return max;
+}
