@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> findMissingElements(vector<int>& nums) {
+    
+
+    int hash[101] = {0}; // hash array to mark existing numbers (1..100)
+    int mn = 101, mx = 0;
+
+    // First pass: find min, max, and fill hash
+    for (int num : nums) {
+        hash[num] = 1;
+        if (num < mn) mn = num;
+        if (num > mx) mx = num;
+    }
+
+    // Second pass: collect missing numbers
+    vector<int> result;
+    for (int i = mn; i <= mx; i++) {
+        if (hash[i] == 0) {
+            result.push_back(i);
+        }
+    }
+
+    return result;
+}
+    
+};
