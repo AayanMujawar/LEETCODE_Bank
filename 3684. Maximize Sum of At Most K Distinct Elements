@@ -1,0 +1,35 @@
+#include <stdlib.h>
+
+int cmpDesc(const void* a, const void* b) {
+    int x = *(int*)a;
+    int y = *(int*)b;
+    return (y - x);  // descending order
+}
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* maxKDistinct(int* nums, int numsSize, int k, int* returnSize) {
+    // Step 1: sort nums in descending order
+    qsort(nums, numsSize, sizeof(int), cmpDesc);
+
+    int* result = (int*)malloc(sizeof(int) * k);
+    int count = 0;
+
+    // Step 2: pick distinct values
+    for (int i = 0; i < numsSize && count < k; i++) {
+        int isDuplicate = 0;
+        for (int j = 0; j < count; j++) {
+            if (result[j] == nums[i]) {
+                isDuplicate = 1;
+                break;
+            }
+        }
+        if (!isDuplicate) {
+            result[count++] = nums[i];
+        }
+    }
+
+    *returnSize = count;
+    return result;
+}
