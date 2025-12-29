@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int absoluteDifference(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());   // sort ascending
+        
+        int n = nums.size();
+        int minSum = 0, maxSum = 0;
+
+        // sum of k smallest
+        for (int i = 0; i < k; i++) {
+            minSum += nums[i];
+        }
+
+        // sum of k largest
+        for (int i = n - 1; i >= n - k; i--) {
+            maxSum += nums[i];
+        }
+
+        return abs(maxSum - minSum);
+    }
+};
