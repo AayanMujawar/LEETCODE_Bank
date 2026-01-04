@@ -1,0 +1,22 @@
+class Solution {
+    public List<Integer> intersection(int[][] nums) {
+        Map<Integer, Integer> count = new HashMap<>();
+        int n = nums.length;
+
+        for (int[] arr : nums) {
+            for (int num : arr) {
+                count.put(num, count.getOrDefault(num, 0) + 1);
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+        for (int key : count.keySet()) {
+            if (count.get(key) == n) {
+                result.add(key);
+            }
+        }
+
+        Collections.sort(result);
+        return result;
+    }
+}
