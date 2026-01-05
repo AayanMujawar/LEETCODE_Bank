@@ -1,0 +1,24 @@
+#include <stdlib.h>
+
+int cmp(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+
+int numRescueBoats(int* people, int peopleSize, int limit) {
+    // Sort people by weight
+    qsort(people, peopleSize, sizeof(int), cmp);
+
+    int i = 0;                  // lightest
+    int j = peopleSize - 1;     // heaviest
+    int boats = 0;
+
+    while (i <= j) {
+        if (people[i] + people[j] <= limit) {
+            i++;    // pair lightest with heaviest
+        }
+        j--;        // heaviest always boards a boat
+        boats++;
+    }
+
+    return boats;
+}
