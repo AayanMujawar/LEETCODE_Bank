@@ -1,0 +1,19 @@
+int numberOfSpecialChars(char* word) {
+    int hash[170]={0};
+    int count = 0;
+    for(int i = 0 ; word[i] != '\0' ; i++)
+    {
+        hash[word[i]]++;
+    }
+    for(int i = 0 ; word[i] != '\0' ; i++)
+    {
+        if((hash[word[i] + 32]) || (hash[word[i] - 32]))
+        {
+            count++;
+            hash[word[i] + 32] = 0;
+            hash[word[i] - 32] = 0;
+        }
+
+    }
+    return count/2;
+}
