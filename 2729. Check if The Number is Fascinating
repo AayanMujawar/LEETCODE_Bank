@@ -1,0 +1,35 @@
+class Solution {
+public:
+    bool isFascinating(int n) {
+      
+    int n2 = 2 * n;
+    int n3 = 3 * n;
+    int hash[10] = {0};
+
+    auto countDigits = [&](int x) {
+        while (x > 0) {
+            int digit = x % 10;
+            hash[digit]++;
+            x /= 10;
+        }
+    };
+
+    countDigits(n);
+    countDigits(n2);
+    countDigits(n3);
+
+    // 0 must not appear
+    if (hash[0] != 0)
+        return false;
+
+    // digits 1–9 must appear exactly once
+    for (int i = 1; i <= 9; i++) {
+        if (hash[i] != 1)
+            return false;
+    }
+
+    return true;
+
+ 
+    }
+};
