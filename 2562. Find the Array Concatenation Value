@@ -1,0 +1,30 @@
+long long findTheArrayConcVal(int* nums, int numsSize) {
+    int left = 0, right = numsSize - 1;
+    long long sum = 0;
+
+    while (left < right) {
+        int a = nums[left];
+        int b = nums[right];
+
+        int temp = b;
+        int multiplier = 1;
+
+        // find power of 10 needed for concatenation
+        while (temp > 0) {
+            multiplier *= 10;
+            temp /= 10;
+        }
+
+        sum += (long long)a * multiplier + b;
+
+        left++;
+        right--;
+    }
+
+    // if one element is left
+    if (left == right) {
+        sum += nums[left];
+    }
+
+    return sum;
+}
