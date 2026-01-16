@@ -1,0 +1,23 @@
+
+struct ListNode* modifiedList(int* nums, int numsSize, struct ListNode* head) {
+   
+    bool present[100001] = { false };
+    for (int i = 0; i < numsSize; i++) {
+        present[nums[i]] = true;
+    }
+    struct ListNode dummy;
+    dummy.next = head;
+
+    struct ListNode* curr = &dummy;
+
+    while (curr->next != NULL) {
+        if (present[curr->next->val]) {
+            struct ListNode* temp = curr->next;
+            curr->next = curr->next->next;
+            free(temp);
+        } else {
+            curr = curr->next;
+        }
+    }
+    return dummy.next;
+}
