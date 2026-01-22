@@ -1,0 +1,28 @@
+int* inorderTraversal(struct TreeNode* root, int* returnSize) {
+    // Max nodes = 100 (given constraint)
+    int* result = (int*)malloc(sizeof(int) * 100);
+    *returnSize = 0;
+
+    // Stack to store tree nodes
+    struct TreeNode* stack[100];
+    int top = -1;
+
+    struct TreeNode* current = root;
+
+    while (current != NULL || top != -1) {
+        // Step 1: Go to the leftmost node
+        while (current != NULL) {
+            stack[++top] = current;
+            current = current->left;
+        }
+
+        // Step 2: Visit the node
+        current = stack[top--];
+        result[(*returnSize)++] = current->val;
+
+        // Step 3: Go to right subtree
+        current = current->right;
+    }
+
+    return result;
+}
