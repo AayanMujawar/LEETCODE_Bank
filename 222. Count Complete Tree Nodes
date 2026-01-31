@@ -1,0 +1,71 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+    public int countNodes(TreeNode root) {
+        if (root == null) return 0;
+
+        int height = getHeight(root);
+
+        // If only one level
+        if (height == 1) return 1;
+
+        // Binary search on last level
+        int left = 0;
+        int right = (1 << (height - 1)) - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (exists(mid, height, root)) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        // Nodes above last level + nodes in last level
+        return (1 << (height - 1)) - 1 + left;
+    }
+
+    // Height of tree (number of levels)
+    private int getHeight(TreeNode node) {
+        int h = 0;
+        while (node != null) {
+            h++;
+            node = node.left;
+        }
+        return h;
+    }
+
+    // Check if node exists at index idx on the last level
+    private boolean exists(int idx, int height, TreeNode node) {
+        int left = 0;
+        int right = (1 << (height - 1)) - 1;
+
+        for (int i = 0; i < height - 1; i++) {
+            int mid = left + (right - left) / 2;
+            if (idx <= mid) {
+                node = node.left;
+                right = mid;
+            } else {
+                node = node.right;
+                left = mid + 1;
+            }
+            if (node == null) return false;
+        }
+        return true;
+    }
+}
