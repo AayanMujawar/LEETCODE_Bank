@@ -1,0 +1,22 @@
+int countBalls(int lowLimit, int highLimit) {
+    int hash[50] = {0};
+    int max = 0;
+
+    for (int i = lowLimit; i <= highLimit; i++) {
+        int sum = 0;
+        int x = i;   // temp variable so we don't modify i
+
+        while (x > 0) {
+            sum += x % 10;
+            x /= 10;
+        }
+
+        hash[sum]++;
+
+        if (hash[sum] > max) {
+            max = hash[sum];
+        }
+    }
+
+    return max;
+}
