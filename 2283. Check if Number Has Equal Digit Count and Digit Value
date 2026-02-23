@@ -1,0 +1,16 @@
+bool digitCount(char* num) {
+    int hash[10] = {0};
+    for(int i = 0 ; num[i]!='\0';i++)
+    {
+        hash[num[i]-'0']++;
+    }
+      for(int i = 0 ; num[i]!='\0';i++)
+    {
+        if((num[i]-'0') != hash[i])
+        {
+            return false;
+        }
+    }
+    return true;
+
+}
