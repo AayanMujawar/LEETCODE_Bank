@@ -1,0 +1,24 @@
+class Solution {
+    public boolean checkOnesSegment(String s) {
+        boolean flag = false;
+        boolean flag2 = false ;
+        for(int i = 0 ; i < s.length() ; i++)
+        {
+            if(s.charAt(i) == '1')
+            {
+                if(flag2)
+                {
+                    return false;
+                }
+                
+                flag = true;
+            }
+            else { // '0'
+                if(flag) {
+                    flag2 = true;
+                }
+            }
+        }
+        return true;
+    }
+}
