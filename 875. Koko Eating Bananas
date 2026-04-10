@@ -1,0 +1,47 @@
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+
+        // your shortcut
+        if (piles.length == h) {
+            int max = 0;
+            for (int p : piles) {
+                max = Math.max(max, p);
+            }
+            return max;
+        }
+
+        int low = 1;
+        int high = 0;
+
+        for (int p : piles) {
+            high = Math.max(high, p);
+        }
+
+        int ans = high;
+
+        while (low <= high) {
+
+            int mid = low + (high - low) / 2;
+
+            if (canFinish(piles, h, mid)) {
+                ans = mid;
+                high = mid - 1; // try smaller
+            } else {
+                low = mid + 1;  // need bigger
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canFinish(int[] piles, int h, int k) {
+
+        int time = 0;
+
+        for (int p : piles) {
+            time += (p + k - 1) / k; // ceil
+        }
+
+        return time <= h;
+    }
+}
