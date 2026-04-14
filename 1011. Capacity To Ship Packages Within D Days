@@ -1,0 +1,45 @@
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+
+        int low = 0, high = 0;
+
+        for (int w : weights) {
+            low = Math.max(low, w); // largest element
+            high += w;              // total sum
+        }
+
+        int ans = high;
+
+        while (low <= high) {
+
+            int mid = low + (high - low) / 2;
+
+            if (canShip(weights, days, mid)) {
+                ans = mid;
+                high = mid - 1; // try smaller
+            } else {
+                low = mid + 1;  // need bigger
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canShip(int[] weights, int days, int cap) {
+
+        int d = 1;
+        int curr = 0;
+
+        for (int w : weights) {
+
+            if (curr + w > cap) {
+                d++;
+                curr = 0;
+            }
+
+            curr += w;
+        }
+
+        return d <= days;
+    }
+}
